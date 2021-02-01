@@ -1,0 +1,19 @@
+#+TITLE: Vectorized and Parallelized Finite Element Library
+
+* Build
+#+begin_src bash
+rm -r ./build
+mkdir build
+cmake H. Bbuild
+#+end_src
+Then either
+#+begin_src bash
+cmake -DCMAKE_BUILD_TYPE=Debug -H.  -Bbuild/Debug
+cmake -DCMAKE_BUILD_TYPE=Release -H. -Bbuild/Release
+#+end_src
+To run the
+#+begin_src bash
+cd ./build/Debug
+make
+./bin/vpfem_test
+#+end_src

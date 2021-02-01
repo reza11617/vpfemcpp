@@ -1,0 +1,9 @@
+#pragma once
+
+// For use  by VPFEM applications
+#include "src/Application.hpp"
+#include "src/Log.hpp"
+
+// --- Entry point -------------
+#include "src/EntryPoint.h"
+// -----------------------------
