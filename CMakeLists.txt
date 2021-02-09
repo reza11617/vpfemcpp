@@ -4,7 +4,7 @@ project(VpfemTest)
 
 if(${CMAKE_BUILD_TYPE} MATCHES Debug)
     message("Debug Build")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -ggdb3 -std=c++17 -Wall -Wextra")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -ggdb3 -std=c++17 -Wall")
 elseif(${CMAKE_BUILD_TYPE} MATCHES Release)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -std=c++17 -O3")
     message("Release Build")

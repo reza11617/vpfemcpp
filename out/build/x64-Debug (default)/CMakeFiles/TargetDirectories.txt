@@ -1,0 +1,9 @@
+C:/Users/Reza/source/repos/reza11617/vpfemcpp/out/build/x64-Debug (default)/CMakeFiles/vpfem_test.dir
+C:/Users/Reza/source/repos/reza11617/vpfemcpp/out/build/x64-Debug (default)/CMakeFiles/edit_cache.dir
+C:/Users/Reza/source/repos/reza11617/vpfemcpp/out/build/x64-Debug (default)/CMakeFiles/rebuild_cache.dir
+C:/Users/Reza/source/repos/reza11617/vpfemcpp/out/build/x64-Debug (default)/VPFEM/CMakeFiles/VPFEM.dir
+C:/Users/Reza/source/repos/reza11617/vpfemcpp/out/build/x64-Debug (default)/VPFEM/CMakeFiles/edit_cache.dir
+C:/Users/Reza/source/repos/reza11617/vpfemcpp/out/build/x64-Debug (default)/VPFEM/CMakeFiles/rebuild_cache.dir
+C:/Users/Reza/source/repos/reza11617/vpfemcpp/out/build/x64-Debug (default)/VPFEM/vendor/spdlog/CMakeFiles/spdlog.dir
+C:/Users/Reza/source/repos/reza11617/vpfemcpp/out/build/x64-Debug (default)/VPFEM/vendor/spdlog/CMakeFiles/edit_cache.dir
+C:/Users/Reza/source/repos/reza11617/vpfemcpp/out/build/x64-Debug (default)/VPFEM/vendor/spdlog/CMakeFiles/rebuild_cache.dir

@@ -5,10 +5,12 @@
 namespace VPFEM {
     class Application
     {
-        public:
-            Application();
-            ~Application();
-            void Run();
+    public:
+        Application();
+        ~Application();
+        void Run();
+    private:
+        
     };
 
     // To be defined in CLIENT code

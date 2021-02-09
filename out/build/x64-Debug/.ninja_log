@@ -1,0 +1,14 @@
+# ninja log v5
+5	1194	633927253	VPFEM/CMakeFiles/VPFEM.dir/src/Application.cpp.obj	5a8bfb60ae652200
+14	1619	633927254	VPFEM/vendor/spdlog/CMakeFiles/spdlog.dir/src/file_sinks.cpp.obj	e171506d127557c3
+7	2117	633927254	VPFEM/CMakeFiles/VPFEM.dir/src/Log.cpp.obj	7e28cea1fb721a3d
+12	2132	633927254	VPFEM/vendor/spdlog/CMakeFiles/spdlog.dir/src/color_sinks.cpp.obj	7d2f71fc2c7702d4
+1	2141	633927254	CMakeFiles/vpfem_test.dir/Sandbox/src/SandboxApp.cpp.obj	86e2ccc00ed11de7
+1195	2932	633927255	VPFEM/vendor/spdlog/CMakeFiles/spdlog.dir/src/stdout_sinks.cpp.obj	6ab55e5306de28c3
+2138	3438	633927256	VPFEM/vendor/spdlog/CMakeFiles/spdlog.dir/src/async.cpp.obj	3052fea6665b11f9
+1650	3472	633927256	VPFEM/vendor/spdlog/CMakeFiles/spdlog.dir/src/cfg.cpp.obj	d969ffdc634b1d67
+10	3539	633927256	VPFEM/vendor/spdlog/CMakeFiles/spdlog.dir/src/spdlog.cpp.obj	e430596c7661b88f
+2125	4282	633927256	VPFEM/vendor/spdlog/CMakeFiles/spdlog.dir/src/fmt.cpp.obj	c778fd35e3c40138
+4323	4449	633927257	lib/spdlogd.lib	a80ebb1017e2c49a
+4449	4496	633927257	lib/VPFEM.lib	681ddfca9f52c206
+4496	5091	633927257	bin/vpfem_test.exe	96ac6ca7bed0cc38

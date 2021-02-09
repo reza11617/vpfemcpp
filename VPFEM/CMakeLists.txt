@@ -7,7 +7,8 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 add_subdirectory(./vendor/spdlog)
 
 set(SOURCES src/Application.cpp
-            src/Log.cpp)
+            src/Log.cpp
+            src/Geometry/Node.cpp)
 
 add_library(VPFEM STATIC ${SOURCES})
 
