@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Core.hpp"
+#include "Log.hpp"
+#include "src/Geometry/Model.hpp"
+#include "src/Geometry/Node.hpp"
 
 namespace VPFEM {
     class Application

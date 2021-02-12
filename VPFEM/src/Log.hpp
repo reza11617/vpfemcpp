@@ -2,10 +2,8 @@
 
 #include <memory>
 
-#pragma warning(push, 0)
 #include <spdlog/spdlog.h>
 #include <spdlog/fmt/ostr.h>
-#pragma warning(pop)
 
 namespace VPFEM {
     class Log
@@ -32,7 +30,7 @@ namespace VPFEM {
 #define VP_CORE_CRITICAL(...) ::VPFEM::Log::GetCoreLogger()->critical(__VA_ARGS__)
 
 // Client log macros
-#define VP_Trace(...)         ::Vpfem::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define VP_Trace(...)         ::VPFEM::Log::GetClientLogger()->trace(__VA_ARGS__)
 #define VP_INFO(...)          ::VPFEM::Log::GetClientLogger()->info(__VA_ARGS__)
 #define VP_WARN(...)          ::VPFEM::Log::GetClientLogger()->warn(__VA_ARGS__)
 #define VP_ERROR(...)         ::VPFEM::Log::GetClientLogger()->error(__VA_ARGS__)

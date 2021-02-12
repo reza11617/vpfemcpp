@@ -4,14 +4,14 @@ project(VpfemTest)
 
 if(${CMAKE_BUILD_TYPE} MATCHES Debug)
     message("Debug Build")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -ggdb3 -std=c++17 -Wall")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -ggdb3 -DDEBUG -std=c++17 -Wall")
 elseif(${CMAKE_BUILD_TYPE} MATCHES Release)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m64 -std=c++17 -O3")
     message("Release Build")
 endif()
 
 
-INCLUDE_DIRECTORIES( ./includes ./VPFEM ./VPFEM/vendor/spdlog/include)
+INCLUDE_DIRECTORIES( ./includes ./VPFEM ./VPFEM/vendor/spdlog/include ./VPFEM/vendor/eigen)
 
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)

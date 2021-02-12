@@ -1,3 +1,6 @@
 [submodule "VPFEM/vendor/spdlog"]
 	path = VPFEM/vendor/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "VPFEM/vendor/eigen"]
+	path = VPFEM/vendor/eigen
+	url = https://gitlab.com/libeigen/eigen.git
