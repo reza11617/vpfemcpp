@@ -2,18 +2,14 @@
 
 #include "Core.hpp"
 #include "Log.hpp"
-#include "src/Geometry/Model.hpp"
-#include "src/Geometry/Node.hpp"
 
 namespace VPFEM {
     class Application
     {
-    public:
-        Application();
-        ~Application();
-        void Run();
-    private:
-        
+        public:
+            Application();
+            virtual ~Application();
+            void Run();
     };
 
     // To be defined in CLIENT code

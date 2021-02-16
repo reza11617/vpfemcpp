@@ -2,6 +2,7 @@
 
 // For use  by VPFEM applications
 #include "src/Application.hpp"
+#include "src/FiniteElementModel.hpp"
 #include "src/Log.hpp"
 
 // --- Entry point -------------
