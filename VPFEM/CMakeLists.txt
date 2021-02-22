@@ -12,7 +12,13 @@ set(SOURCES src/Application.cpp
             src/Geometry/Node.cpp
             src/Geometry/Model.cpp
             src/Element/Element.cpp
-            src/Element/BeamElement.cpp)
+            src/Element/ElasticBeamElement.cpp
+            src/Element/ElasticBeamColumnElement.cpp
+            src/Analyze/Analyze.cpp
+            src/Analyze/Result.cpp
+            src/Analyze/ConjugateGradientIterative.cpp
+            src/Analyze/ConjugateGradientPreconditioned.cpp
+            src/Material/Material.cpp)
 
 add_library(VPFEM STATIC ${SOURCES})
 

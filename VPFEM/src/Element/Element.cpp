@@ -6,7 +6,7 @@ namespace VPFEM {
     }
     Element::~Element(){}
 
-    size_t Element::TotalElementDof()
+    size_t Element::TotalElementDof() const
     {
         return m_l_node.size() * m_l_node[0]->GetModel()->GetNumberDofs();
     }
@@ -19,35 +19,52 @@ namespace VPFEM {
         return m_l_node[node_number]->Local2Global(node_dof);
     }
 
-    Eigen::VectorXd Element::ElementVector(Eigen::VectorXd& global_vector)
+    VectorXld Element::ElementVector(VectorXld& global_vector)
     {
-        Eigen::VectorXd local_vector(TotalElementDof());
+        VectorXld local_vector(TotalElementDof());
         for (size_t i = 0; i < TotalElementDof(); i++)
             local_vector(i) = global_vector(Local2Global(i));
         return local_vector;
     }
 
-    size_t Element::Node2Element(size_t dof, size_t node_number)
+    size_t Element::Node2Element(size_t dof, size_t node_number) const
     {
         size_t max_node_dof = m_l_node[0]->GetModel()->GetNumberDofs();
         return max_node_dof * node_number + dof;
     }
 
-    Eigen::VectorXd Element::ForceVector()
+    VectorXld Element::ForceVector() const
     {
-        Eigen::VectorXd force = Eigen::VectorXd::Zero(TotalElementDof());
+        VectorXld force = VectorXld::Zero(TotalElementDof());
         for (size_t i = 0; i < m_l_node.size(); i++)
             for (auto& load: m_l_node[i]->GetLoad())
                 force(Node2Element(load.GetDof(), i)) = load.GetMagnitude();
         return force;
     }
 
-    void Element::Assemble(Eigen::VectorXd &Global, Eigen::VectorXd &local)
+    void Element::Assemble(VectorXld &Global, VectorXld &local)
     {
         for (size_t i = 0; i < TotalElementDof(); i++)
         {
             Global(Local2Global(i)) += local(i);
         }
+    }
+
+    void Element::WriteHeader(std::ofstream &fout) const
+    {
+        for (auto& node : m_l_node)
+        {
+            fout << "Node" << "_";
+            fout << node->GetNodeNumber() << ",";
+        }
+    }
+
+    void Element::Write(std::ofstream &fout) const
+    {
+        fout << m_ele_number << ",";
+        for (auto& node : m_l_node)
+            fout << node->GetNodeNumber() << ",";
+
     }
 
 }

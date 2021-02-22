@@ -106,7 +106,7 @@ namespace VPFEM {
         return m_node_number*m_model->GetNumberDofs() + dof;
     }
 
-    void Node::ZeroFixes(Eigen::VectorXd &v)
+    void Node::ZeroFixes(VectorXld &v)
     // This function zeros the entris of a global vector v
     {
         size_t i = 0;
@@ -116,5 +116,25 @@ namespace VPFEM {
                 v(Local2Global(i)) = 0.0;
             i++;
         }
+    }
+
+    void Node::WriteHeader(std::ofstream &fout) const
+    {
+        fout << "Node,x,y,z,fixedDof,load[dof,magnitude]";
+    }
+
+    void Node::Write(std::ofstream &fout) const
+    {
+        fout << m_node_number << "," << m_x << "," << m_y << "," << m_z << ",[";
+
+        for (size_t i = 0; i < m_list_dof.size(); i++)
+        {
+            if (m_list_dof[i])
+                fout << i << ",";
+        }
+        fout << "],[";
+        for (auto& load : m_load)
+            fout << "[" <<load.GetDof() << "," << load.GetMagnitude() << "],";
+        fout << "],";
     }
 }

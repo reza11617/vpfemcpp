@@ -8,10 +8,10 @@ class Sandbox : public VPFEM::Application
     public:
         Sandbox()
         {
-            BeamElementExample *b1 = new BeamElementExample(1.0, 1.0, 3);
+            BeamElementExample *b1 = new BeamElementExample(20.0, 100.0, 200, "CG");
             delete b1;
 
-            BeamElementExample *b2 = new BeamElementExample(1.0, 1.0, 2);
+            BeamElementExample *b2 = new BeamElementExample(20.0, 100.0, 200, "CGP");
             delete b2;
         }
 

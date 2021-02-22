@@ -11,6 +11,10 @@ namespace VPFEM {
             Load(size_t dof, double magnitude);
             inline size_t GetDof() const {return m_dof;}
             inline size_t GetMagnitude() const {return m_magnitude;}
+            void Write(std::ofstream& fout) const
+            {
+                fout << m_dof << "," << m_magnitude << ",";
+            }
         private:
             size_t m_dof;
             double m_magnitude;
@@ -30,7 +34,7 @@ namespace VPFEM {
             void Fix(std::initializer_list<bool> l_dof);
             void PointLoad(size_t dof, double magnitude);
             size_t Local2Global(size_t dof);
-            void ZeroFixes(Eigen::VectorXd& v);
+            void ZeroFixes(VectorXld& v);
             inline double GetX() const {return m_x;}
             inline double GetY() const {return m_y;}
             inline double GetZ() const {return m_z;}
@@ -41,19 +45,8 @@ namespace VPFEM {
             inline const std::vector<Load>& GetLoad() const {return m_load;}
             inline const std::vector<bool>& GetListFixDofs() const {return m_list_dof;}
             ~Node();
-            template<typename OStream>
-            friend OStream &operator<<(OStream &os, const Node &c)
-            {
-                os << "Node(" << c.GetNodeNumber() << "):";
-                os << " x = " << c.GetX() << " y = " << c.GetY() << " z = " << c.GetZ();
-                for (auto& v : c.GetLoad())
-                    os << "\tLoad{" << v.GetDof() <<", " << v.GetMagnitude() << "}";
-                int dof = 0;
-                for (auto v : c.GetListFixDofs())
-                    if (v)
-                        os << "\tFix {" << dof++ << "}";
-                return os;
-            }
+            void WriteHeader(std::ofstream& fout) const;
+            void Write(std::ofstream& fout) const;
             friend double Distance(const Node& n1, const Node& n2);
         private:
             size_t m_node_number = -1;
