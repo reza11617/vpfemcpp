@@ -2,24 +2,20 @@
 
 #include "Core.hpp"
 #include "Log.hpp"
+#include "Recorder.hpp"
 #include "src/Geometry/Model.hpp"
 #include "src/Geometry/Node.hpp"
 #include "src/Element/Element.hpp"
 #include "src/Element/ElasticBeamElement.hpp"
 #include "src/Element/ElasticBeamColumnElement.hpp"
-#include "src/Analyze/Analyze.hpp"
-#include "src/Analyze/ConjugateGradientIterative.hpp"
-#include "src/Analyze/ConjugateGradientPreconditioned.hpp"
 #include "src/Material/Material.hpp"
-#include "Recorder.hpp"
+#include "src/Analyze/Analyze.hpp"
+#include "src/Analyze/Result.hpp"
 
 namespace VPFEM {
     class FiniteElementModel
     {
         public:
-            FiniteElementModel();
-            void ModelBuilder(size_t nDof, size_t nDim);
-            virtual ~FiniteElementModel();
             template<typename ... Ts>
             void PushNode(Ts ... args)
             {
@@ -44,23 +40,24 @@ namespace VPFEM {
                 m_total_material_number++;
 
             }
-            template <typename T>
-            void Analyze(double tol)
-            {
-                analyze = std::make_unique<T>();
-                analyze->SetTolarance(tol);
-            }
-            void Run();
-            void RecorderMesh()
-            {
-                Recorder::Print("mesh_element.out", element);
-                Recorder::Print("mesh_node.out", node);
-            }
+
+            FiniteElementModel();
+            void ModelBuilder(size_t nDof, size_t nDim);
+            void RecorderMesh();
+            virtual ~FiniteElementModel();
+            inline std::vector<std::shared_ptr<Node>> GetNode() const {return node;}
+            inline std::vector<std::shared_ptr<Element>> GetElement() const {return element;}
+            inline std::vector<std::shared_ptr<Material>> GetMaterial() const {return material;}
+            inline std::shared_ptr<Analyze> GetAnalyze() const {return analyze;}
+            inline size_t GetTotalDof() const {return node.size() * m_model->GetNumberDofs();}
+            inline std::shared_ptr<Result> GetResult() const {return result;}
+            inline void SetDeformation(VectorXld& def) {result->SetDeformation(def);}
         protected:
-            std::vector<std::shared_ptr<VPFEM::Node>> node;
-            std::vector<std::shared_ptr<VPFEM::Element>> element;
-            std::vector<std::shared_ptr<VPFEM::Material>> material;
-            std::unique_ptr<ConjugateGradientIterative> analyze;
+            std::vector<std::shared_ptr<Node>> node;
+            std::vector<std::shared_ptr<Element>> element;
+            std::vector<std::shared_ptr<Material>> material;
+            std::shared_ptr<Analyze> analyze;
+            std::shared_ptr<Result> result;
         private:
             std::shared_ptr<Model> m_model;
             size_t m_total_node_number = 0;

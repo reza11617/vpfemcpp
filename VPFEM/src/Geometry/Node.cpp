@@ -134,7 +134,7 @@ namespace VPFEM {
         }
         fout << "],[";
         for (auto& load : m_load)
-            fout << "[" <<load.GetDof() << "," << load.GetMagnitude() << "],";
-        fout << "],";
+            fout << "[" <<load.GetDof() << "," << load.GetMagnitude() << "]";
+        fout << "]";
     }
 }

@@ -16,8 +16,7 @@ set(SOURCES src/Application.cpp
             src/Element/ElasticBeamColumnElement.cpp
             src/Analyze/Analyze.cpp
             src/Analyze/Result.cpp
-            src/Analyze/ConjugateGradientIterative.cpp
-            src/Analyze/ConjugateGradientPreconditioned.cpp
+            src/Analyze/Solver.cpp
             src/Material/Material.cpp)
 
 add_library(VPFEM STATIC ${SOURCES})

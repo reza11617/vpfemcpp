@@ -3,6 +3,8 @@
 namespace VPFEM {
     FiniteElementModel::FiniteElementModel()
     {
+        result = std::make_shared<Result>();
+        analyze = std::make_shared<Analyze>();
     }
 
     FiniteElementModel::~FiniteElementModel()
@@ -14,12 +16,9 @@ namespace VPFEM {
         m_model = std::make_shared<Model>(nDof, nDim);
     }
 
-    void FiniteElementModel::Run()
+    void FiniteElementModel::RecorderMesh()
     {
-
-        analyze->SetTotalDof(node.size() * m_model->GetNumberDofs());
-        analyze->SetElement(element);
-        analyze->SetNode(node);
-        analyze->Solve();
+        Recorder::Print("mesh_element.out", element);
+        Recorder::Print("mesh_node.out", node);
     }
 }

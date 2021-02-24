@@ -11,7 +11,7 @@ class BeamElementExample : public VPFEM::FiniteElementModel
         double m_area = 1.0;
         size_t m_num_ele;
     public:
-        BeamElementExample(double length, double stiffness, size_t number_of_elements, std::string Solver)
+        BeamElementExample(double length, double stiffness, size_t number_of_elements)
             :m_length(length), m_stiffness(stiffness), m_num_ele(number_of_elements)
         {
             // build model
@@ -27,22 +27,16 @@ class BeamElementExample : public VPFEM::FiniteElementModel
             // Load
             // PointLoad(dof, magnitude)
             node[m_num_ele]->PointLoad(1, 10.0);
-            //for (auto& n : node)
-            //    VP_TRACE("{0}", *n);
             // Define Material
             PushMaterial<VPFEM::Elastic>(m_stiffness);
             // Define Element
             // PushElement<ElementType>(args)
             for (size_t i = 0; i < m_num_ele; i++)
                 PushElement<VPFEM::ElasticBeamColumnElement>(node[i], node[i+1], m_inertia, m_area,  material[0]);
-            //for (auto& n : element)
-            //    VP_TRACE(*n);
+            // Record mesh data on a file
             RecorderMesh();
             // Analyse
-            if (Solver == "CG")
-                Analyze<VPFEM::ConjugateGradientIterative>(0.000001);
-            else if (Solver == "CGP")
-                Analyze<VPFEM::ConjugateGradientPreconditioned>(0.000001);
+            analyze->SetTolarance(0.0000001);
             //VPFEM::Recorder::Print("disp.out",analyze->GetDeformation());
             //std::cout << analyze->Deformation(node[m_num_ele], 1) << std::endl;
         }

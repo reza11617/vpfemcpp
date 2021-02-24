@@ -3,7 +3,6 @@
 namespace VPFEM {
     Analyze::Analyze()
     {
-        std::make_shared<Result>();
     }
     Analyze::~Analyze()
     {

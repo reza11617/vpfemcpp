@@ -11,15 +11,11 @@ namespace VPFEM {
             Load(size_t dof, double magnitude);
             inline size_t GetDof() const {return m_dof;}
             inline size_t GetMagnitude() const {return m_magnitude;}
-            void Write(std::ofstream& fout) const
-            {
-                fout << m_dof << "," << m_magnitude << ",";
-            }
+            void Write(std::ofstream& fout) const {fout << m_dof << "," << m_magnitude << ",";}
         private:
             size_t m_dof;
             double m_magnitude;
     };
-
 
     class Node
     {
@@ -44,9 +40,9 @@ namespace VPFEM {
             inline std::shared_ptr<Model> GetModel() const {return m_model;}
             inline const std::vector<Load>& GetLoad() const {return m_load;}
             inline const std::vector<bool>& GetListFixDofs() const {return m_list_dof;}
-            ~Node();
             void WriteHeader(std::ofstream& fout) const;
             void Write(std::ofstream& fout) const;
+            ~Node();
             friend double Distance(const Node& n1, const Node& n2);
         private:
             size_t m_node_number = -1;
