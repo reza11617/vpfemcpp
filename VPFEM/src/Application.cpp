@@ -3,6 +3,7 @@
 namespace VPFEM {
     Application::Application()
     {
+        VP_PROFILE_FUNCTION();
     }
 
     Application::~Application()

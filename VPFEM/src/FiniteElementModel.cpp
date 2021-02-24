@@ -16,7 +16,7 @@ namespace VPFEM {
 
     void FiniteElementModel::Run()
     {
-        VP_PROFILE_FUNCTION();
+
         analyze->SetTotalDof(node.size() * m_model->GetNumberDofs());
         analyze->SetElement(element);
         analyze->SetNode(node);

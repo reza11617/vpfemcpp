@@ -5,4 +5,8 @@ namespace VPFEM {
     {
         std::make_shared<Result>();
     }
+    Analyze::~Analyze()
+    {
+
+    }
 }

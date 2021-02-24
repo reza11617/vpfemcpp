@@ -6,7 +6,7 @@
 #include <Eigen/Dense>
 #include <Eigen/Sparse>
 #include <memory>
-#include "Debug/Instrumentation.hpp"
+#include "Instrumentation.hpp"
 
 
 typedef Eigen::Vector<long double, Eigen::Dynamic> VectorXld;

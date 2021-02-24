@@ -9,6 +9,7 @@ namespace VPFEM {
     {
         public:
             Analyze();
+            virtual ~Analyze();
             inline void SetTolarance(double tol) {m_tolarance = tol;}
             inline void SetTotalDof(size_t num) {m_total_dof = num;}
             inline void SetElement(std::vector<std::shared_ptr<Element>>& ele) {m_element = ele;}

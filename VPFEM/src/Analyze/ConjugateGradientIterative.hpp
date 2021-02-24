@@ -7,11 +7,12 @@ namespace VPFEM {
     {
         private:
         public:
+            ConjugateGradientIterative(){};
+            ~ConjugateGradientIterative(){};
             virtual void Solve() override;
         protected:
-            VectorXld MakeInit();
             void ZeroFixes(VectorXld& v);
             VectorXld GlobalForce();
-            void ElementByElement(VectorXld& result, VectorXld& input);
+            VectorXld ElementByElement(VectorXld& input);
     };
 }

@@ -1,5 +1,7 @@
 #include <VPFEM>
 
+
+
 class BeamElementExample : public VPFEM::FiniteElementModel
 {
     private:
@@ -38,12 +40,11 @@ class BeamElementExample : public VPFEM::FiniteElementModel
             RecorderMesh();
             // Analyse
             if (Solver == "CG")
-                Analyze<VPFEM::ConjugateGradientIterative>(0.00001);
+                Analyze<VPFEM::ConjugateGradientIterative>(0.000001);
             else if (Solver == "CGP")
-                Analyze<VPFEM::ConjugateGradientPreconditioned>(0.00001);
-            Run();
-            VPFEM::Recorder::Print("disp.out",analyze->GetDeformation());
-            std::cout << analyze->Deformation(node[m_num_ele], 1) << std::endl;
+                Analyze<VPFEM::ConjugateGradientPreconditioned>(0.000001);
+            //VPFEM::Recorder::Print("disp.out",analyze->GetDeformation());
+            //std::cout << analyze->Deformation(node[m_num_ele], 1) << std::endl;
         }
 
         ~BeamElementExample()
