@@ -33,16 +33,16 @@ class BeamElementExample : public VPFEM::FiniteElementModel
             // PushElement<ElementType>(args)
             for (size_t i = 0; i < m_num_ele; i++)
                 PushElement<VPFEM::ElasticBeamColumnElement>(node[i], node[i+1], m_inertia, m_area,  material[0]);
-            // Record mesh data on a file
-            RecorderMesh();
             // Analyse
             analyze->SetTolarance(0.0000001);
             //VPFEM::Recorder::Print("disp.out",analyze->GetDeformation());
             //std::cout << analyze->Deformation(node[m_num_ele], 1) << std::endl;
+            // PushRecorder(analyze->Deformation, node, dof);
         }
 
         ~BeamElementExample()
         {
-
+            // Record("filename", functioncall, {ListofNodes})
+            // Record(displacement, m_num_ele);
         }
 };

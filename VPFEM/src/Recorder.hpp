@@ -1,39 +1,54 @@
 #pragma once
 
 #include "Core.hpp"
+#include "src/Analyze/Result.hpp"
+#include <filesystem>
 
 namespace VPFEM {
+    const static Eigen::IOFormat CSVFormat(Eigen::FullPrecision, Eigen::DontAlignCols, "", ",", "", "", "", "\n");
+    template <typename T, typename T2>
     class Recorder
     {
         public:
-            Recorder(const Recorder&) = delete;
-            static Recorder& Get()
+
+            Recorder(const std::string& file_name, size_t fem_number, T* function, std::shared_ptr<T2> node, std::shared_ptr<Result> results)
+                : m_file_name(file_name), m_fem_number(fem_number), m_function(function), m_node(node), m_results(results)
             {
-                static Recorder recorder;
-                return recorder;
+                std::string file_path = "results/model_" + std::to_string(m_fem_number);
+                m_file_name = file_path + "/" + m_file_name;
+                m_file.open(m_file_name);
+
             }
-            template<typename T>
-            static void Print(const std::string& file_name, std::vector<T> v)
+            void Print()
             {
-                // TODO this class is a very bad impelementation of recorder fix this try to make it binary
-                std::ofstream file(file_name);
-                v[0]->WriteHeader(file); file << "\n";
-                for (auto& i : v)
+                VectorXld v = m_function(m_node, m_results);
+                Print(v);
+            }
+
+            void Print(VectorXld& vector)
+            {
+                if (m_file.is_open())
                 {
-                    i->Write(file);
-                    file << "\n";
+                    m_file << vector.format(CSVFormat);
                 }
-                file.close();
+                else
+                {
+                    if (Log::GetCoreLogger())
+                    {
+                        VP_CORE_ERROR("Recorder could not open results file '{0}'.", m_file_name);
+                    }
+                }
             }
-
-            static void Print(const std::string& file_name, VectorXld& v)
+            ~Recorder()
             {
-                std::ofstream file(file_name);
-                file << v;
-                file.close();
+                m_file.close();
             }
-
         private:
-            Recorder();
+            std::string m_file_name;
+            size_t m_fem_number;
+            T* m_function;
+            std::shared_ptr<Node> m_node;
+            std::shared_ptr<Result> m_results;
+            std::ofstream m_file;
     };
 }

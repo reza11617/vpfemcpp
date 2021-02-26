@@ -2,7 +2,6 @@
 
 #include "Core.hpp"
 #include "Log.hpp"
-#include "Recorder.hpp"
 #include "src/Geometry/Model.hpp"
 #include "src/Geometry/Node.hpp"
 #include "src/Element/Element.hpp"
@@ -11,6 +10,7 @@
 #include "src/Material/Material.hpp"
 #include "src/Analyze/Analyze.hpp"
 #include "src/Analyze/Result.hpp"
+#include "src/Recorder.hpp"
 
 namespace VPFEM {
     class FiniteElementModel
@@ -43,7 +43,7 @@ namespace VPFEM {
 
             FiniteElementModel();
             void ModelBuilder(size_t nDof, size_t nDim);
-            void RecorderMesh();
+            static void CreateRecorderFilePath(size_t i);
             virtual ~FiniteElementModel();
             inline std::vector<std::shared_ptr<Node>> GetNode() const {return node;}
             inline std::vector<std::shared_ptr<Element>> GetElement() const {return element;}
@@ -52,6 +52,8 @@ namespace VPFEM {
             inline size_t GetTotalDof() const {return node.size() * m_model->GetNumberDofs();}
             inline std::shared_ptr<Result> GetResult() const {return result;}
             inline void SetDeformation(VectorXld& def) {result->SetDeformation(def);}
+            inline void SetFiniteElementModelNumber(size_t num) {m_finite_element_model_number = num;}
+            inline size_t GetFiniteElementModelNumber() const {return m_finite_element_model_number;}
         protected:
             std::vector<std::shared_ptr<Node>> node;
             std::vector<std::shared_ptr<Element>> element;
@@ -63,6 +65,7 @@ namespace VPFEM {
             size_t m_total_node_number = 0;
             size_t m_total_element_number = 0;
             size_t m_total_material_number = 0;
+            size_t m_finite_element_model_number = 0;
     };
 
 }

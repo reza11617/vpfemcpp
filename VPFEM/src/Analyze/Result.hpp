@@ -11,6 +11,6 @@ namespace VPFEM {
         public:
             inline VectorXld& GetDeformation() {return m_deformation;}
             inline void SetDeformation(VectorXld v) {m_deformation = v;}
-            double Deformation(std::shared_ptr<Node> node, size_t dof);
+            static VectorXld Deformation(std::shared_ptr<Node> node, std::shared_ptr<Result> results);
     };
 }
