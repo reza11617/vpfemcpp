@@ -37,12 +37,10 @@ class BeamElementExample : public VPFEM::FiniteElementModel
             analyze->SetTolarance(0.0000001);
             //VPFEM::Recorder::Print("disp.out",analyze->GetDeformation());
             //std::cout << analyze->Deformation(node[m_num_ele], 1) << std::endl;
-            // PushRecorder(analyze->Deformation, node, dof);
+            PushRecorder<VPFEM::Node>("def.out", VPFEM::Result::Deformation, {node[0],node.back()});
         }
 
         ~BeamElementExample()
         {
-            // Record("filename", functioncall, {ListofNodes})
-            // Record(displacement, m_num_ele);
         }
 };

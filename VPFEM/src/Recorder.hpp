@@ -1,30 +1,36 @@
 #pragma once
 
 #include "Core.hpp"
+#include "src/Geometry/Node.hpp"
+#include "src/Element/Element.hpp"
 #include "src/Analyze/Result.hpp"
-#include <filesystem>
 
 namespace VPFEM {
-    const static Eigen::IOFormat CSVFormat(Eigen::FullPrecision, Eigen::DontAlignCols, "", ",", "", "", "", "\n");
-    template <typename T, typename T2>
+    const static Eigen::IOFormat CSVFormat(Eigen::FullPrecision, Eigen::DontAlignCols, "", ",", "", "", "", ",");
     class Recorder
     {
         public:
-
-            Recorder(const std::string& file_name, size_t fem_number, T* function, std::shared_ptr<T2> node, std::shared_ptr<Result> results)
-                : m_file_name(file_name), m_fem_number(fem_number), m_function(function), m_node(node), m_results(results)
+            Recorder(const std::string& file_name)
+                : m_file_name(file_name)
             {
-                std::string file_path = "results/model_" + std::to_string(m_fem_number);
-                m_file_name = file_path + "/" + m_file_name;
-                m_file.open(m_file_name);
-
-            }
-            void Print()
-            {
-                VectorXld v = m_function(m_node, m_results);
-                Print(v);
             }
 
+            void StartRecording(const std::string& file_path)
+            {
+
+                std::filesystem::create_directories(file_path);
+                m_file_path_name = file_path + "/" + m_file_name;
+                m_file.open(m_file_path_name);
+            }
+
+            virtual ~Recorder()
+            {
+                m_file.close();
+            }
+
+            virtual void Print(std::shared_ptr<Result> result) = 0;
+        protected:
+            inline std::ofstream& GetFile() {return m_file;}
             void Print(VectorXld& vector)
             {
                 if (m_file.is_open())
@@ -35,20 +41,39 @@ namespace VPFEM {
                 {
                     if (Log::GetCoreLogger())
                     {
-                        VP_CORE_ERROR("Recorder could not open results file '{0}'.", m_file_name);
+                        VP_CORE_ERROR("Recorder could not open results file '{0}'.", m_file_path_name);
                     }
                 }
             }
-            ~Recorder()
+        private:
+            const std::string m_file_name;
+            std::string m_file_path_name;
+            std::ofstream m_file;
+    };
+
+
+    template<typename T>
+    class Printer : public Recorder
+    {
+        public:
+            Printer(const std::string& file_name,
+                    VectorXld (* func) (std::shared_ptr<T>, std::shared_ptr<Result>),
+                    const std::initializer_list<std::shared_ptr<T>> print_list)
+                : Recorder(file_name), m_func(func), m_print_list(print_list.begin(), print_list.end())
             {
-                m_file.close();
+
+            }
+            void Print(std::shared_ptr<Result> result) override
+            {
+                for (auto type : m_print_list)
+                {
+                    VectorXld v = m_func(type, result);
+                    Recorder::Print(v);
+                }
+                GetFile() << "\n";
             }
         private:
-            std::string m_file_name;
-            size_t m_fem_number;
-            T* m_function;
-            std::shared_ptr<Node> m_node;
-            std::shared_ptr<Result> m_results;
-            std::ofstream m_file;
+            VectorXld (* m_func) (std::shared_ptr<T>, std::shared_ptr<Result>);
+            std::vector<std::shared_ptr<T>> m_print_list;
     };
 }

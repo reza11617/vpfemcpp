@@ -105,4 +105,11 @@ namespace VPFEM
         ZeroFixes(M, fem);
         return M;
     }
+    void Solver::ElasticAnalysis(std::shared_ptr<FiniteElementModel> fem)
+    {
+        VP_PROFILE_FUNCTION();
+        VectorXld def = Solver::CGP(fem);
+        fem->SetDeformation(def);
+        FiniteElementModel::PrintRecorders(fem);
+    }
 }

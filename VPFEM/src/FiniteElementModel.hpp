@@ -41,9 +41,19 @@ namespace VPFEM {
 
             }
 
+            template<typename T>
+            void PushRecorder(const std::string& file_name,
+                              VectorXld (* func) (std::shared_ptr<T>, std::shared_ptr<Result>),
+                              std::initializer_list<std::shared_ptr<T>> list)
+            {
+                m_recorder.push_back(std::make_shared<Printer<T>>(file_name,
+                                                                  func,
+                                                                  list));
+            }
+
             FiniteElementModel();
             void ModelBuilder(size_t nDof, size_t nDim);
-            static void CreateRecorderFilePath(size_t i);
+            static void PrintRecorders(std::shared_ptr<FiniteElementModel> fem);
             virtual ~FiniteElementModel();
             inline std::vector<std::shared_ptr<Node>> GetNode() const {return node;}
             inline std::vector<std::shared_ptr<Element>> GetElement() const {return element;}
@@ -54,6 +64,10 @@ namespace VPFEM {
             inline void SetDeformation(VectorXld& def) {result->SetDeformation(def);}
             inline void SetFiniteElementModelNumber(size_t num) {m_finite_element_model_number = num;}
             inline size_t GetFiniteElementModelNumber() const {return m_finite_element_model_number;}
+            inline void SetRecorderDir(const std::string& path) {m_recorder_dir = path;}
+            inline std::string& GetRecorderDir() {return m_recorder_dir;}
+            inline std::vector<std::shared_ptr<Recorder>>& GetRecorder() {return m_recorder;}
+
         protected:
             std::vector<std::shared_ptr<Node>> node;
             std::vector<std::shared_ptr<Element>> element;
@@ -66,6 +80,8 @@ namespace VPFEM {
             size_t m_total_element_number = 0;
             size_t m_total_material_number = 0;
             size_t m_finite_element_model_number = 0;
+            std::vector<std::shared_ptr<Recorder>> m_recorder;
+            std::string m_recorder_dir;
     };
 
 }

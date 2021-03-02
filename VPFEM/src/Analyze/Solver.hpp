@@ -10,6 +10,8 @@ namespace VPFEM {
                 static Solver solver;
                 return solver;
             }
+
+            static void ElasticAnalysis(std::shared_ptr<FiniteElementModel> fem);
             static VectorXld  CG(std::shared_ptr<FiniteElementModel> fem); // Conjugate gradient Iterative
             static VectorXld CGP(std::shared_ptr<FiniteElementModel> fem); // Conjugate gradient Preconditioned
             static void ZeroFixes(VectorXld& v, std::shared_ptr<FiniteElementModel> fem);
