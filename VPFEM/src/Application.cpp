@@ -14,7 +14,7 @@ namespace VPFEM {
 
     void Application::Run()
     {
-#define ASYNC 1
+#define ASYNC 0
 #if ASYNC
         for (auto fem: m_v_fem)
             m_future.push_back(std::async(std::launch::async, Solver::ElasticAnalysis, fem));

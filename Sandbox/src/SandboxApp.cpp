@@ -6,11 +6,8 @@ class Sandbox : public VPFEM::Application
     public:
         Sandbox()
         {
-            PushFiniteElementModel<BeamElementExample>(20,100,700);
-            PushFiniteElementModel<BeamElementExample>(20,100,700);
-            PushFiniteElementModel<BeamElementExample>(20,100,700);
-            PushFiniteElementModel<BeamElementExample>(20,100,700);
-            PushFiniteElementModel<BeamElementExample>(20,100,700);
+            for (size_t i = 0; i < 1; i++)
+                PushFiniteElementModel<BeamElementExample>(20,100, 2000);
         }
 
         ~Sandbox()

@@ -9,10 +9,12 @@ namespace VPFEM {
         : m_x(x)
     {
     }
+
     Node::Node(double x, double y)
         : m_x(x), m_y(y)
     {
     }
+
     Node::Node(double x, double y, double z)
         : m_x(x), m_y(y), m_z(z)
     {
@@ -20,12 +22,10 @@ namespace VPFEM {
 
     Node::Node(const Node& other)
     {
+        m_x = other.m_x; m_y = other.m_y; m_z = other.m_z;
         m_list_dof = other.m_list_dof;
         m_load = other.m_load;
         m_node_number = other.m_node_number;
-        m_x = other.m_x;
-        m_y = other.m_y;
-        m_z = other.m_z;
     }
 
     Node& Node::operator=(const Node &other)

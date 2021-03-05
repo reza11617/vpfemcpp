@@ -12,7 +12,9 @@ set(SOURCES src/Application.cpp
             src/Geometry/Node.cpp
             src/Geometry/Model.cpp
             src/Element/Element.cpp
+            src/Element/IntegrationPoints.cpp
             src/Element/ElasticBeamElement.cpp
+            src/Element/Quad4.cpp
             src/Element/ElasticBeamColumnElement.cpp
             src/Analyze/Analyze.cpp
             src/Analyze/Result.cpp

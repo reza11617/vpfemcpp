@@ -45,10 +45,10 @@ namespace VPFEM {
             ~Node();
             friend double Distance(const Node& n1, const Node& n2);
         private:
-            size_t m_node_number = -1;
             double m_x = 0.0, m_y = 0.0, m_z = 0.0;
             std::vector<bool> m_list_dof;
             std::vector<Load> m_load;
             std::shared_ptr<Model> m_model;
+            size_t m_node_number = -1;
     };
 }

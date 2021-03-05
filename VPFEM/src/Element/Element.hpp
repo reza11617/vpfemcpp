@@ -4,6 +4,7 @@
 #include "src/Log.hpp"
 #include "src/Material/Material.hpp"
 #include "src/Geometry/Node.hpp"
+#include "src/Element/IntegrationPoints.hpp"
 
 namespace VPFEM {
     class Element
