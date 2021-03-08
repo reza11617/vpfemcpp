@@ -6,23 +6,23 @@ namespace VPFEM {
     {}
 
     Node::Node(double x)
-        : m_x(x)
+        : m_coord({x})
     {
     }
 
     Node::Node(double x, double y)
-        : m_x(x), m_y(y)
+        : m_coord({x, y})
     {
     }
 
     Node::Node(double x, double y, double z)
-        : m_x(x), m_y(y), m_z(z)
+        : m_coord({x, y, z})
     {
     }
 
     Node::Node(const Node& other)
     {
-        m_x = other.m_x; m_y = other.m_y; m_z = other.m_z;
+        m_coord = other.m_coord;
         m_list_dof = other.m_list_dof;
         m_load = other.m_load;
         m_node_number = other.m_node_number;
@@ -37,9 +37,7 @@ namespace VPFEM {
             m_list_dof = other.m_list_dof;
             m_load = other.m_load;
             m_node_number = other.m_node_number;
-            m_x = other.m_x;
-            m_y = other.m_y;
-            m_z = other.m_z;
+            m_coord = other.m_coord;
         }
         return *this;
     }
@@ -49,9 +47,7 @@ namespace VPFEM {
         m_list_dof = other.m_list_dof;
         m_load = other.m_load;
         m_node_number = other.m_node_number;
-        m_x = other.m_x;
-        m_y = other.m_y;
-        m_z = other.m_z;
+        m_coord = other.m_coord;
         other.m_list_dof.clear();
         other.m_load.clear();
     }
@@ -66,10 +62,8 @@ namespace VPFEM {
             m_list_dof = other.m_list_dof;
             m_load = other.m_load;
             m_node_number = other.m_node_number;
-            m_x = other.m_x;
-            m_y = other.m_y;
-            m_z = other.m_z;
 
+            m_coord = other.m_coord;
             other.m_list_dof.clear();
             other.m_load.clear();
         }
@@ -82,9 +76,19 @@ namespace VPFEM {
 
     double Distance(const Node& n1, const Node& n2)
     {
-        return sqrt( (n1.GetX() - n2.GetX()) * (n1.GetX() - n2.GetX()) +
-                     (n1.GetY() - n2.GetY()) * (n1.GetY() - n2.GetY()) +
-                     (n1.GetZ() - n2.GetZ()) * (n1.GetZ() - n2.GetZ()));
+        switch(n1.GetCoord().size())
+        {
+            case 1:
+                return sqrt( (n1.GetCoord()[0] - n2.GetCoord()[0]) * (n1.GetCoord()[0] - n2.GetCoord()[0]));
+            case 2:
+                return sqrt( (n1.GetCoord()[0] - n2.GetCoord()[0]) * (n1.GetCoord()[0] - n2.GetCoord()[0]) +
+                             (n1.GetCoord()[1] - n2.GetCoord()[1]) * (n1.GetCoord()[1] - n2.GetCoord()[1]));
+            case 3:
+                return sqrt( (n1.GetCoord()[0] - n2.GetCoord()[0]) * (n1.GetCoord()[0] - n2.GetCoord()[0]) +
+                             (n1.GetCoord()[1] - n2.GetCoord()[1]) * (n1.GetCoord()[1] - n2.GetCoord()[1]) +
+                             (n1.GetCoord()[2] - n2.GetCoord()[2]) * (n1.GetCoord()[2] - n2.GetCoord()[2]));
+        }
+        return 0;
     }
 
     void Node::Fix(std::initializer_list<bool> l_dof)
@@ -125,8 +129,10 @@ namespace VPFEM {
 
     void Node::Write(std::ofstream &fout) const
     {
-        fout << m_node_number << "," << m_x << "," << m_y << "," << m_z << ",[";
-
+        fout << m_node_number << ",";
+        for (auto& c: m_coord)
+            fout << c << ",";
+        fout << "[";
         for (size_t i = 0; i < m_list_dof.size(); i++)
         {
             if (m_list_dof[i])

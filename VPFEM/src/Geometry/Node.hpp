@@ -31,9 +31,7 @@ namespace VPFEM {
             void PointLoad(size_t dof, double magnitude);
             size_t Local2Global(size_t dof);
             void ZeroFixes(VectorXld& v);
-            inline double GetX() const {return m_x;}
-            inline double GetY() const {return m_y;}
-            inline double GetZ() const {return m_z;}
+            inline const std::vector<double>& GetCoord() const {return m_coord;}
             inline size_t GetNodeNumber() const {return m_node_number;}
             inline void SetNodeNumber(size_t num) {m_node_number = num;}
             inline void SetModel(std::shared_ptr<Model> m) {m_model = m;}
@@ -45,7 +43,7 @@ namespace VPFEM {
             ~Node();
             friend double Distance(const Node& n1, const Node& n2);
         private:
-            double m_x = 0.0, m_y = 0.0, m_z = 0.0;
+            std::vector<double> m_coord;
             std::vector<bool> m_list_dof;
             std::vector<Load> m_load;
             std::shared_ptr<Model> m_model;
