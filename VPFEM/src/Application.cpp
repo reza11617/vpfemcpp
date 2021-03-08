@@ -14,7 +14,7 @@ namespace VPFEM {
 
     void Application::Run()
     {
-#define ASYNC 0
+#define ASYNC 1
 #if ASYNC
         for (auto fem: m_v_fem)
             m_future.push_back(std::async(std::launch::async, Solver::ElasticAnalysis, fem));
@@ -24,6 +24,20 @@ namespace VPFEM {
             Solver::ElasticAnalysis(fem);
         }
 #endif
+        // Testing quad element delete after testing is done
+        std::vector<std::shared_ptr<Node>> node;
+        node.emplace_back(std::make_shared<Node>(0.0,0.0));
+        node.emplace_back(std::make_shared<Node>(0.0,1.0));
+        node.emplace_back(std::make_shared<Node>(1.0,1.0));
+        node.emplace_back(std::make_shared<Node>(1.0,0.0));
+        std::shared_ptr<Material> mat;
+        mat = std::make_shared<ElasticPlainStress>(1000.0,0.3);
+        Quad4 a(node[0],
+                node[1],
+                node[2],
+                node[3],
+                Quad4::Nip::Four,
+                mat);
     }
 
 

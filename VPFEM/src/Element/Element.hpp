@@ -14,7 +14,7 @@ namespace VPFEM {
             virtual ~Element();
             virtual void Write(std::ofstream& fout) const;
             virtual void WriteHeader(std::ofstream& fout) const;
-            virtual MatrixXld StiffnessMatrix() = 0;
+            virtual MatrixXld StiffnessMatrix();
             inline void SetElementNumber(size_t num) {m_ele_number = num;}
             inline void SetMaterial(std::shared_ptr<Material> mat) {material = mat;}
             inline const std::vector<std::shared_ptr<Node>>& GetListNode() const {return m_l_node;}
@@ -26,6 +26,8 @@ namespace VPFEM {
             void Assemble(VectorXld& Global, VectorXld& local);
             VectorXld ElementVector(VectorXld& global_vector);
             VectorXld ForceVector() const;
+        protected:
+            static MatrixXld BeeMat(MatrixXld& deriv);
         protected:
             std::vector<std::shared_ptr<Node>> m_l_node;
             std::shared_ptr<Material> material;

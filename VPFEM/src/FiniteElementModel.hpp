@@ -5,6 +5,7 @@
 #include "src/Geometry/Model.hpp"
 #include "src/Geometry/Node.hpp"
 #include "src/Element/Element.hpp"
+#include "src/Element/Quad4.hpp"
 #include "src/Element/ElasticBeamElement.hpp"
 #include "src/Element/ElasticBeamColumnElement.hpp"
 #include "src/Material/Material.hpp"

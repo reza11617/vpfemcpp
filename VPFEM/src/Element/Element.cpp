@@ -67,4 +67,55 @@ namespace VPFEM {
 
     }
 
+    MatrixXld Element::BeeMat(MatrixXld &deriv)
+    {
+        size_t n_dim = deriv.rows();
+        size_t n_shape = deriv.cols();
+
+        size_t bee_rows = n_dim*(n_dim+1)/2;
+        size_t bee_cols = n_dim * n_shape;
+
+        MatrixXld bee = MatrixXld::Zero(bee_rows, bee_cols);
+
+        for (size_t j = 0; j < n_shape; j++)
+        {
+            for (size_t i = 0; i < n_dim; i++)
+                bee(i, j * n_dim + i) = deriv(i, j);
+
+            bee(n_dim, j * n_dim + 1) = deriv(0, j);
+            bee(n_dim, j * n_dim + 0) = deriv(1, j);
+        }
+        // for 3d dimension where number of rows in bee matrix is 6
+        if (n_dim + 1 < bee_rows)
+        {
+            for (size_t j = 0; j < n_shape; j++)
+            {
+                bee(n_dim + 1, j * n_dim + 1) = deriv(2, j);
+                bee(n_dim + 1, j * n_dim + 2) = deriv(1, j);
+                bee(n_dim + 2, j * n_dim + 0) = deriv(2, j);
+                bee(n_dim + 2, j * n_dim + 2) = deriv(0, j);
+            }
+        }
+
+        return bee;
+    }
+/*
+
+    MatrixXld Element::Coord()
+    {
+        size_t n_nodes = m_l_node.size();
+        size_t n_dim = m_l_node[0]->GetModel()->GetNumberDims();
+        MatrixXld coord(n_dim, n_nodes);
+        for (auto node: m_l_node)
+            for (size_t i = 0 ; i < n_dim)
+
+    }
+*/
+
+    MatrixXld Element::StiffnessMatrix()
+    {
+
+    }
+
+
 }
